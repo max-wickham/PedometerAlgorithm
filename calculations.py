@@ -153,6 +153,6 @@ class StepDetection:
 step = StepDetection('data3.csv')
 step.run_filter()
 step.averagedata()
-step.smoothdata()
+#step.smoothdata()
 step.count_peaks()
 step.plot_data()
