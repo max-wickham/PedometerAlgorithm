@@ -1,14 +1,13 @@
-#include "lpf.c"
-#include "bpf.c"
+
 //Acceleration
 struct ListAxis{
-    long int data[1000];
+    long int data[{{axis_size}}];
     int cursor;
     int length;
 };
 
 struct ListConstants{
-    long int data[1000];
+    long int data[{{axis_size}}];
 };
 
 void insert(struct ListAxis* list, long int data){
@@ -48,13 +47,13 @@ long int gravitationalA(struct Acceleration* acceleration){
 
 //Accelerometer
 struct ListAccelerometer{
-    long int data[1000];
+    long int data[{{acceleration_size}}];
     int cursor;
     int length;
 };
 
 struct ListConstantsAccelerometer{
-    long int data[1000];
+    long int data[{{acceleration_size}}];
 };
 
 struct Accelerometer{
@@ -111,17 +110,15 @@ long int run_filter(struct Accelerometer* accelerometer, long int x, long int y,
 
 int main(){
     //first initialise the three acceleration axis;
-    struct ListAxis x; x.cursor = 0;// x.length = also set length of array in struct
-    struct ListAxis y; y.cursor = 0;// x.length = also set length of array in struct
-    struct ListAxis z; z.cursor = 0;// x.length = also set length of array in struct
-    struct ListConstants alphaX; //then fill alpha x with values
-    struct ListConstants alphaY; //then fill alpha y with values
-    struct ListConstants alphaZ; //then fill alpha z with values
-    struct Acceleration accelerationX; accelerationX.a = &x; accelerationX.alpha = &alphaX; accelerationX.firA = 0;
-    struct Acceleration accelerationY; accelerationY.a = &y; accelerationY.alpha = &alphaY; accelerationY.firA = 0;
-    struct Acceleration accelerationZ; accelerationZ.a = &z; accelerationZ.alpha = &alphaZ; accelerationZ.firA = 0;
-    struct ListAccelerometer a; a.cursor = 0;// a.length = also set length of array in struct
-    struct ListConstantsAccelerometer alphaA; //fill alpha with values
+    struct ListAxis x; x.cursor = 0; x.length = {{axis_size}};
+    struct ListAxis y; y.cursor = 0; y.length = {{axis_size}};
+    struct ListAxis z; z.cursor = 0; z.length = {{axis_size}};
+    struct ListConstants alphaAxis = {.data = { {% for x in lpf[:-1] %} {{x}} , {% endfor %} {{lpf[axis_size]}}}};
+    struct Acceleration accelerationX; accelerationX.a = &x; accelerationX.alpha = &alphaAxis; accelerationX.firA = 0;
+    struct Acceleration accelerationY; accelerationY.a = &y; accelerationY.alpha = &alphaAxis; accelerationY.firA = 0;
+    struct Acceleration accelerationZ; accelerationZ.a = &z; accelerationZ.alpha = &alphaAxis; accelerationZ.firA = 0;
+    struct ListAccelerometer a; a.cursor = 0; a.length = {{acceleration_size}};
+    struct ListConstantsAccelerometer alphaA = {.data { {% for x in bpf[:-1] %} {{x}} , {% endfor %} {{bpf[acceleration_size]}}}};
     struct Accelerometer accelerometer;
     accelerometer.x = &accelerationX; accelerometer.y = &accelerationY; accelerometer.z = &accelerationZ;
     accelerometer.a = &a;
@@ -131,8 +128,8 @@ int main(){
     long int yData;
     long int zData;
     long int data;
-    while(true){
+    //while(1){
         //update the xData yData and zData values from the accelerometer
-        data = run_filter(accelerometer,xData,yData,zData);
-    }
+        data = run_filter(&accelerometer,xData,yData,zData);
+    //}
 }

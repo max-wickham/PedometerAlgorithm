@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import re
+import math
 class Accleration:
     a = []
     alpha = []
@@ -12,6 +13,7 @@ class Accleration:
         data = f.readlines()
         data[0] = re.split('\t+|\s+',data[0])
         self.alpha = [float(x) for x in data[0]]
+        #print(self.alpha)
         num = len(data[0])
         self.a = [0 for i in range(num)]
 
@@ -22,7 +24,8 @@ class Accleration:
 
     def fir(self):
         total = 0
-        for x in [self.a[i]*self.alpha[i] for i in range(11)]:
+        #print(self.alpha)
+        for x in [self.a[i]*self.alpha[i] for i in range(len(self.alpha))]:
             total += x
         self.fir_data = total
 
@@ -87,8 +90,9 @@ class StepDetection:
     def run_filter(self):
         for i in range(len(self.data)):
             self.a.append([self.data["x_data"][i],self.data["y_data"][i],self.data["z_data"][i]])
+            #print(self.a.z.fir_data)
             self.step_data.append(self.a.filter())
-    
+                
     def plot_data(self):
         time_data = range(len(self.step_data))
         plt.plot(time_data,self.step_data)
@@ -152,7 +156,7 @@ class StepDetection:
 
 step = StepDetection('data3.csv')
 step.run_filter()
-step.averagedata()
+#step.averagedata()
 #step.smoothdata()
-step.count_peaks()
+#step.count_peaks()
 step.plot_data()
