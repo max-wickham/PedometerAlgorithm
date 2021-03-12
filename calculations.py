@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import re
 _length = 16
 class Accleration:
-    a = [0 for i in range(_length)]
-    alpha = [0.00355773007577022,	0.0204161415535754,	0.0614216670105817,	0.124327248354339,	0.185162263681329,	0.210696541719535,	0.185162263681329,	0.124327248354339,	0.0614216670105817,	0.0204161415535754,	0.00355773007577022]
+    a = []
+    alpha = []
     fir_data = 0
 
     def __init__(self):
@@ -97,7 +97,7 @@ class StepDetection:
 
     def smoothdata(self):
         filterprev = self.step_data[0]
-        filter_constant = 100
+        filter_constant = 30
         filtered = []
         for x in self.step_data:
             filt = (x+filterprev*filter_constant)/(filter_constant+1)
@@ -105,44 +105,55 @@ class StepDetection:
             filterprev = filt
         self.step_data = filtered
 
-    def count_peaks(self):
-        count = 0
-        last_min = 0
-        last_max = 0
-        goingup = False
-        band = 0.0002
-        min_change = 0.00001
-        prevx = 0
-        for x in self.step_data:
-            if x < prevx:
-                if goingup:
-                    goingup = False
-                    last_max = prevx
-                    if (last_max - last_min) > band:
-                        count += 1
-            if x > prevx:
-                if goingup == False:
-                    goingup = True
-                    last_min = prevx
-            prevx = x       
+    def averagedata(self):
+        window = 10
+        filtered = []
+        for i in range(len(self.step_data)-window):
+            filt = np.mean(self.step_data[i:i+10])
+            filtered.append(filt)
+        self.step_data = filtered
 
+    
+
+    def count_peaks(self):
         # count = 0
-        # below = True
-        # peak_mag = 0.0003
-        # low_mag = 0.0001
+        # last_min = 0
+        # last_max = 0
+        # goingup = False
+        # band = 0.0002
+        # min_change = 0.00001
+        # prevx = 0
         # for x in self.step_data:
-        #     if below:
-        #         if x > peak_mag:
-        #             count += 1
-        #             below = False
-        #     else:
-        #         if x < low_mag:
-        #             below = True
+        #     if x < prevx:
+        #         if goingup:
+        #             goingup = False
+        #             last_max = prevx
+        #             if (last_max - last_min) > band:
+        #                 count += 1
+        #     if x > prevx:
+        #         if goingup == False:
+        #             goingup = True
+        #             last_min = prevx
+        #     prevx = x       
+
+        count = 0
+        below = True
+        peak_mag = 0.0003
+        low_mag = 0.0001
+        for x in self.step_data:
+            if below:
+                if x > peak_mag:
+                    count += 1
+                    below = False
+            else:
+                if x < low_mag:
+                    below = True
         print(count)
 
 
 step = StepDetection('data3.csv')
 step.run_filter()
+step.averagedata()
 step.smoothdata()
 step.count_peaks()
 step.plot_data()

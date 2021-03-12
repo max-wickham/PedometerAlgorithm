@@ -1,4 +1,6 @@
 
+#define NULL 0
+
 struct ListEntry{
     struct ListEntry* nextEntry;
     struct ListEntry* previousEntry;
@@ -9,6 +11,8 @@ struct ListBegin{
     struct ListEntry* listEnd;
     struct ListEntry* firstEntry;
 };
+
+
 
 void insert(struct ListBegin* list, long int data){
     //add a new entry
@@ -28,7 +32,7 @@ long int dotProduct(struct ListBegin* x, struct ListBegin* y){
     struct ListEntry* xEntry = x->firstEntry;
     struct ListEntry* yEntry = y->firstEntry;
     result += xEntry->value + yEntry->value;
-    while(xEntry->nextEntry != 0 || yEntry->nextEntry != 0){
+    while(xEntry->nextEntry != NULL || yEntry->nextEntry != NULL){
         result += xEntry->value + yEntry->value;
         xEntry = xEntry->nextEntry;
         yEntry = yEntry->nextEntry;
@@ -71,7 +75,7 @@ long int userAccelerationGravitationalDirection(struct Accelerometer* accelerome
     fir(accelerometer->x);
     fir(accelerometer->y);
     fir(accelerometer->z);
-    long int x_sum = 
+    long int x_sum;
 }
 
 // def userAccelerationGravitationalDirection(self):
