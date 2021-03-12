@@ -1,57 +1,45 @@
 
 #define NULL 0
 
-struct ListEntry{
-    struct ListEntry* nextEntry;
-    struct ListEntry* previousEntry;
-    long int value;
+struct ListAxis{
+    long int data[1000];
+    int cursor;
+    int length;
 };
 
-struct ListBegin{
-    struct ListEntry* listEnd;
-    struct ListEntry* firstEntry;
+struct ListConstants{
+    long int data[1000];
 };
 
-
-
-void insert(struct ListBegin* list, long int data){
-    //add a new entry
-    struct ListEntry* newEntry;
-    newEntry->value = data;
-    newEntry->nextEntry = list->firstEntry;
-    newEntry->nextEntry->previousEntry = newEntry;
-    list->firstEntry = newEntry;
-    //remove the last entry
-    struct ListEntry* end = list->listEnd->previousEntry;
-    free(list->listEnd);
-    list->listEnd = end;
+void insert(struct ListAxis* list, long int data){
+    list->cursor--;
+    if(list->cursor < 0){
+        list->cursor += list->length;
+    }
+    list->data[list->cursor] = data;
 }
 
-long int dotProduct(struct ListBegin* x, struct ListBegin* y){
-    long int result = 0;
-    struct ListEntry* xEntry = x->firstEntry;
-    struct ListEntry* yEntry = y->firstEntry;
-    result += xEntry->value + yEntry->value;
-    while(xEntry->nextEntry != NULL || yEntry->nextEntry != NULL){
-        result += xEntry->value + yEntry->value;
-        xEntry = xEntry->nextEntry;
-        yEntry = yEntry->nextEntry;
+long int filterProduct(struct ListAxis* a, struct ListConstants* alpha){
+    long int total;
+    for(int i = 0; i < a->length; i++){
+        int cursor = (i + a->cursor) % a->cursor;
+        total += ((a->data[cursor])*(alpha->data[i]));
     }
-    return result;
+    return total;
 }
 
 struct Acceleration{
-    struct ListBegin* a;
-    struct ListBegin* alpha;
+    struct ListAxis* a;
+    struct ListConstants* alpha;
     long int firA;
 };
 
 void fir(struct Acceleration* acceleration){
-    acceleration->firA = dotProduct(acceleration->a,acceleration->alpha);
+    acceleration->firA = filterProduct(acceleration->a,acceleration->alpha);
 }
 
 long int userA(struct Acceleration* acceleration){
-    return (acceleration->a->firstEntry->value - acceleration->firA);
+    return (acceleration->a->data[acceleration->a->cursor] - acceleration->firA);
 }
 
 long int gravitationalA(struct Acceleration* acceleration){
@@ -75,17 +63,20 @@ long int userAccelerationGravitationalDirection(struct Accelerometer* accelerome
     fir(accelerometer->x);
     fir(accelerometer->y);
     fir(accelerometer->z);
-    long int x_sum;
+    long int x_sum = userA(accelerometer->x) * gravitationalA(accelerometer->x);
+    long int y_sum = userA(accelerometer->y) * gravitationalA(accelerometer->y);
+    long int z_sum = userA(accelerometer->z) * gravitationalA(accelerometer->z);
+    return (x_sum + y_sum + z_sum);
 }
 
-// def userAccelerationGravitationalDirection(self):
-//         self.x.fir()
-//         self.y.fir()
-//         self.z.fir()
-//         x_sum = self.x.userA() * self.x.gravitaionalA()
-//         y_sum = self.y.userA() * self.y.gravitaionalA()
-//         z_sum = self.z.userA() * self.z.gravitaionalA()
-//         return x_sum + y_sum + z_sum
+long int firAccelerometer(accelerometer, )
+
+    // def fir(self,a,alpha):
+    //     total = 0
+    //     for x in [a[i]*alpha[i] for i in range(_length)]:
+    //         total += x
+    //     return total
+
 
 int main(){
     //step one filter the previous data to get the current direction of gravity

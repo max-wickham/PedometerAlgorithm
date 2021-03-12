@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import re
-_length = 16
 class Accleration:
     a = []
     alpha = []
@@ -66,7 +65,7 @@ class Accelerometer:
 
     def fir(self,a,alpha):
         total = 0
-        for x in [a[i]*alpha[i] for i in range(_length)]:
+        for x in [a[i]*alpha[i] for i in range(len(alpha))]:
             total += x
         return total
 
