@@ -119,6 +119,16 @@ long int run_filter(struct Accelerometer* accelerometer, long int x, long int y,
     return filter(accelerometer);
 }
 
+long int ewma(long data, long prev_value, unsigned weight, unsigned total_weight, unsigned iter) {
+    // on first iteration no prev value, so return same
+    if (iter != 0) {
+        return data;
+    }
+    /* if a = 0.2 => weight = 2, total_weight = 10, indicates window size of ~9 */
+
+    /* weight and total weight represent the fraction between 0-1 to improve the weight of the previous value*/
+    return (weight*data + (total_weight-weight)*prev_value)/total_weight;
+}
 int main(){
     //first initialise the three acceleration axis;
     struct ListAxis x; x.cursor = {{axis_size}}; x.length = {{axis_size}};
@@ -140,12 +150,16 @@ int main(){
     long int zData[{{zdatalength}}] = { {% for z in zData[:-1]%} {{z}} , {%endfor%} {{zData[xdatalength-1]}}  };
     long int data;
 
+    long int prev_value;
+
     int count = 0;
     int below = TRUE;
     long int peakMag = 10000000;
     long int lowMag = 0;
-    for(int i = 0; i < {{xdatalength}}; i++){
+    for(unsigned int i = 0; i < {{xdatalength}}; i++){
+        prev_value = data;
         data = run_filter(&accelerometer,xData[i],yData[i],zData[i]);
+        data = ewma(data, prev_value, 2, 10, i);
         if(below){
             if(data > peakMag){
                 count += 1;

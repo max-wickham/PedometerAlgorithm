@@ -1,0 +1,13 @@
+# Temporary output files
+test/output*
+
+# Editors
+.idea
+.vscode
+
+# Python virtual env
+venv
+
+
+# Python package cache
+__pycache__
