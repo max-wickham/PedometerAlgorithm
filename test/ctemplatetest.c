@@ -1,6 +1,7 @@
 
 #include <stdio.h>
-
+#define TRUE 1
+#define FALSE 0
 //Acceleration
 struct ListAxis{
     long int data[{{axis_size}}];
@@ -21,10 +22,14 @@ void insert(struct ListAxis* list, long int data){
 }
 
 long int filterProduct(struct ListAxis* a, struct ListConstants* alpha){
-    long int total;
+    long int total = 0;
+    int cursor;
+    long int data;
     for(int i = 0; i < a->length; i++){
-        int cursor = (i + a->cursor) % a->cursor;
-        total += ((a->data[cursor])*(alpha->data[i]));
+        cursor = (i + a->cursor) % a->length;
+        data = ((a->data[cursor])*(alpha->data[i]));
+        data >>= {{lpfBitScalar}};
+        total += data;
     }
     return total;
 }
@@ -92,9 +97,13 @@ long int userAccelerationGravitationalDirection(struct Accelerometer* accelerome
 
 long int firAccelerometer(struct Accelerometer* accelerometer){
     long int total = 0;
+    long int data;
+    int cursor;
     for(int i = 0; i < accelerometer->a->length; i++){
-        int cursor = (i + accelerometer->a->cursor) % accelerometer->a->cursor;
-        total += ((accelerometer->a->data[cursor])*(accelerometer->alpha->data[i]));
+        cursor = (i + accelerometer->a->cursor) % accelerometer->a->length;
+        long int data = ((accelerometer->a->data[cursor])*(accelerometer->alpha->data[i]));
+        data >>= {{bpfBitScalar}};
+        total += data;
     }
     return total;
 }
@@ -112,9 +121,9 @@ long int run_filter(struct Accelerometer* accelerometer, long int x, long int y,
 
 int main(){
     //first initialise the three acceleration axis;
-    struct ListAxis x; x.cursor = 0; x.length = {{axis_size}};
-    struct ListAxis y; y.cursor = 0; y.length = {{axis_size}};
-    struct ListAxis z; z.cursor = 0; z.length = {{axis_size}};
+    struct ListAxis x; x.cursor = {{axis_size}}; x.length = {{axis_size}};
+    struct ListAxis y; y.cursor = {{axis_size}}; y.length = {{axis_size}};
+    struct ListAxis z; z.cursor = {{axis_size}}; z.length = {{axis_size}};
     struct ListConstants alphaAxis = {.data = { {% for x in lpf[:-1] %} {{x}} , {% endfor %} {{lpf[axis_size-1]}}}};
     struct Acceleration accelerationX; accelerationX.a = &x; accelerationX.alpha = &alphaAxis; accelerationX.firA = 0;
     struct Acceleration accelerationY; accelerationY.a = &y; accelerationY.alpha = &alphaAxis; accelerationY.firA = 0;
@@ -126,13 +135,28 @@ int main(){
     accelerometer.a = &a;
     accelerometer.alpha = &alphaA;
 
-    long int xData;
-    long int yData;
-    long int zData;
+    long int xData[{{xdatalength}}] = { {% for x in xData[:-1]%} {{x}} , {%endfor%} {{xData[xdatalength-1]}}  };
+    long int yData[{{ydatalength}}] = { {% for y in yData[:-1]%} {{y}} , {%endfor%} {{yData[xdatalength-1]}}  };
+    long int zData[{{zdatalength}}] = { {% for z in zData[:-1]%} {{z}} , {%endfor%} {{zData[xdatalength-1]}}  };
     long int data;
-    //while(1){
-        //update the xData yData and zData values from the accelerometer
-        data = run_filter(&accelerometer,xData,yData,zData);
-    printf("%ld",data);
-    //}
+
+    int count = 0;
+    int below = TRUE;
+    long int peakMag = 10000000;
+    long int lowMag = 0;
+    for(int i = 0; i < {{xdatalength}}; i++){
+        data = run_filter(&accelerometer,xData[i],yData[i],zData[i]);
+        if(below){
+            if(data > peakMag){
+                count += 1;
+                below = FALSE;
+            }
+        }else{
+            if(data < lowMag){
+                below = TRUE;
+            }
+        }
+        printf("%ld ",data);
+    }
+    //printf("%d ",count);
 }

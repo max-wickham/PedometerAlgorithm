@@ -1,5 +1,9 @@
 import re
 from jinja2 import Template
+
+max_int = 2000
+
+
 lpf = open('./lowPass.txt','r')
 bpf = open('./bandPass.txt','r')
 
@@ -10,8 +14,6 @@ lpfData = [float(x) for x in lpfData]
 bpfData = bpf.readlines()[0]
 bpfData = re.split('\t+|\s+',bpfData)
 bpfData = [float(x) for x in bpfData]
-
-max_int = 1000
 #convert values to integers
 def convertToInt(data):
     max_float = max(data)

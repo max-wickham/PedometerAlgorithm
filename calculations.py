@@ -3,6 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import re
 import math
+
+max_int = 100
+def convertToInt(data):
+    max_float = max(data)
+    multiplier = max_int / max_float
+    for i in range(len(data)):
+        data[i] = int(data[i]*multiplier+0.5)
+
 class Accleration:
     a = []
     alpha = []
@@ -13,6 +21,7 @@ class Accleration:
         data = f.readlines()
         data[0] = re.split('\t+|\s+', data[0])
         self.alpha = [float(x) for x in data[0]]
+        convertToInt(self.alpha)
         #print(self.alpha)
         num = len(data[0])
         self.a = [0 for i in range(num)]
@@ -55,6 +64,7 @@ class Accelerometer:
         data = f.readlines()
         data[0] = re.split('\t+|\s+', data[0])
         self.alpha = [float(x) for x in data[0]]
+        convertToInt(self.alpha)
         num = len(data[0])
         self.a = [0 for i in range(num)]
 
@@ -90,7 +100,7 @@ class StepDetection:
 
     def run_filter(self):
         for i in range(len(self.data)):
-            self.a.append([self.data["x_data"][i], self.data["y_data"][i], self.data["z_data"][i]])
+            self.a.append([int(100*self.data["x_data"][i]+0.5), int(100*self.data["y_data"][i]+0.5), int(100*self.data["z_data"][i]+0.5)])
             self.step_data.append(self.a.filter())
 
     def plot_data(self):
