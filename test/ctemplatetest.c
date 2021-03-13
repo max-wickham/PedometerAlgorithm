@@ -159,7 +159,7 @@ int main(){
     for(unsigned int i = 0; i < {{xdatalength}}; i++){
         prev_value = data;
         data = run_filter(&accelerometer,xData[i],yData[i],zData[i]);
-        data = ewma(data, prev_value, 2, 10, i);
+        data = ewma(data, prev_value, {{ewma_weight}}, {{ewma_total_weight}}, i);
         if(below){
             if(data > peakMag){
                 count += 1;
