@@ -135,11 +135,7 @@ long int run_filter(struct Accelerometer* accelerometer, long int x, long int y,
 }
 
 long int ewma(long data, long prev_value, unsigned weight,
-              unsigned total_weight, unsigned iter) {
-  // on first iteration no prev value, so return same
-  if (iter != 0) {
-    return data;
-  }
+              unsigned total_weight) {
   /* if a = 0.2 => weight = 2, total_weight = 10, indicates window size of ~9 */
 
   /* weight and total weight represent the fraction between 0-1 to improve the
@@ -186,7 +182,7 @@ int main() {
     long int gravY;
     long int gravZ;
     int gravTotal;
-    int correctGrav = false;
+    bool correctGrav = false;
 
     int count = 0;
     int below = true;
@@ -227,6 +223,15 @@ int main() {
       gravTotal = sqrt((gravX * gravX + gravY * gravY + gravZ * gravZ));
       /* Calibrate thresholds */
       correctGrav = (gravTotal < 450) & (gravTotal > 350);
+
+      /*
+
+        To calibrate thresholds we need to create a method to check if the Grav
+      has reached a consistent value In order to do this, we could use the EWMA
+      again and see if the deviations reach a value, epsilon.
+
+      **/
+
       // printf("%ld\n",gravTotal);
       if (correctGrav) {
         if (below) {
