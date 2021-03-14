@@ -1,5 +1,6 @@
 # Temporary output files
 test/output*
+output.c
 
 # Editors
 .idea

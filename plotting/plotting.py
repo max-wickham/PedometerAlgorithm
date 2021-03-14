@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 
-
-data = open("./data.txt","r")
+data = open("./data.txt", "r")
 d = data
 d = d.readlines()
 data.close()
