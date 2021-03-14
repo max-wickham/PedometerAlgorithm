@@ -244,8 +244,7 @@ int main()
         {
             is_first_cycle = false;
             prev_gravTotal = gravTotal;
-            goto skip_threshold_check;
-            // Need to skip threshold using a goto?
+            continue;
         }
         /*
           Todo: change correctGrav to use epsilon between prev_gravTotal and gravTotal
@@ -284,7 +283,6 @@ int main()
             }
             test_count += 1;
         }
-    skip_threshold_check:
     }
     // printf("%d ",count);
 }
