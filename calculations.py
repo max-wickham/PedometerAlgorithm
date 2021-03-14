@@ -86,7 +86,8 @@ class Accelerometer:
     def filter(self):
         self.a.insert(0, (self.user_acceleration_gravitational_direction()))
         self.a = self.a[:-1]
-        result = fir(self.a, self.alpha)
+        #result = fir(self.a, self.alpha)
+        result = self.a[0]
         return result
 
 

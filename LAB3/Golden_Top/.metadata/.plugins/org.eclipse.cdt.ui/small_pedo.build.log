@@ -1,0 +1,9 @@
+12:14:40 **** Incremental Build of configuration Nios II for project small_pedo ****
+make all 
+Info: Building ../small_pedo_bsp/
+make --no-print-directory -C ../small_pedo_bsp/
+[BSP build complete]
+[small_pedo build complete]
+
+12:14:40 Build Finished (took 214ms)
+

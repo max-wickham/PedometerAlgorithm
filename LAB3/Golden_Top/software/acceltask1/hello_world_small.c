@@ -1,0 +1,105 @@
+#include "system.h"
+#include "altera_up_avalon_accelerometer_spi.h"
+#include "altera_avalon_timer_regs.h"
+#include "altera_avalon_timer.h"
+#include "altera_avalon_pio_regs.h"
+#include "sys/alt_irq.h"
+#include <stdlib.h>
+
+#define OFFSET -32
+#define PWM_PERIOD 16
+
+alt_8 pwm = 0;
+alt_u8 led;
+int level;
+
+// Accelerometer filter variables
+#define FILTER_ORDER 49
+float filter_coefficients[FILTER_ORDER] = { 0.00464135470656760, 0.00737747226463043, -0.00240768675012549, -0.00711018685736960, 0.00326564674118811, 6.11463173516297e-05, -0.00935761974859676, 0.00397493281996669, 0.00437887161977042, -0.0133160721439149, 0.00304771783859210, 0.0114361953193935, -0.0179286984033957, -0.00107408161324030, 0.0222597890359562, -0.0224772654507762, -0.0108744542661829, 0.0395972756447093, -0.0263221720611839, -0.0337570326573828, 0.0751987217099385, -0.0288978194901786, -0.120354853218164, 0.287921968939103, 0.636863388360281, 0.287921968939103, -0.120354853218164, -0.0288978194901786, 0.0751987217099385, -0.0337570326573828, -0.0263221720611839, 0.0395972756447093, -0.0108744542661829, -0.0224772654507762, 0.0222597890359562, -0.00107408161324030, -0.0179286984033957, 0.0114361953193935, 0.00304771783859210, -0.0133160721439149, 0.00437887161977042, 0.00397493281996669, -0.00935761974859676, 6.11463173516297e-05, 0.00326564674118811, -0.00711018685736960, -0.00240768675012549, 0.00737747226463043, 0.00464135470656760 };
+alt_32 previous_readings[FILTER_ORDER];
+
+// The led pattern is stored in 8-bits.
+void led_write(alt_u8 led_pattern) {
+    IOWR(LED_BASE, 0, led_pattern);
+}
+
+void convert_read(alt_32 acc_read, int * level, alt_u8 * led) {
+    acc_read += OFFSET;
+    alt_u8 val = (acc_read >> 6) & 0x07;
+    * led = (8 >> val) | (8 << (8 - val));
+    * level = (acc_read >> 1) & 0x1f;
+}
+
+void sys_timer_isr() {
+    IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
+
+    if (pwm < abs(level)) {
+
+        if (level < 0) {
+            led_write(led << 1);
+        } else {
+            led_write(led >> 1);
+        }
+
+    } else {
+        led_write(led);
+    }
+
+    if (pwm > PWM_PERIOD) {
+        pwm = 0;
+    } else {
+        pwm++;
+    }
+
+}
+
+void timer_init(void * isr) {
+
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_BASE, 0x0003);
+    IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
+    IOWR_ALTERA_AVALON_TIMER_PERIODL(TIMER_BASE, 0x0900);
+    IOWR_ALTERA_AVALON_TIMER_PERIODH(TIMER_BASE, 0x0000);
+    alt_irq_register(TIMER_IRQ, 0, isr);
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_BASE, 0x0007);
+
+}
+
+// Finite impulse response filter
+alt_32 fir_filter(alt_32 acc_read) {
+    // Shifting all the elements in the array by one time step
+    for(int i = FILTER_ORDER-1; i>0; i--) {
+        previous_readings[i] = previous_readings[i-1];
+    }
+    // Adding the current reading into the array
+    previous_readings[0] = acc_read;
+
+    // Computing the weighted moving average
+    float filter_output = 0.0;
+    for(int i = 0; i<FILTER_ORDER; i++) {
+        filter_output += previous_readings[i]*filter_coefficients[i];
+    }
+
+    return (alt_32)filter_output;
+}
+
+int main() {
+
+    alt_32 x_read;
+    alt_up_accelerometer_spi_dev * acc_dev;
+    acc_dev = alt_up_accelerometer_spi_open_dev("/dev/accelerometer_spi");
+    if (acc_dev == NULL) { // if return 1, check if the spi ip name is "accelerometer_spi"
+        return 1;
+    }
+
+    timer_init(sys_timer_isr);
+    while (1) {
+
+        alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
+        // alt_printf("raw data: %x\n", x_read);
+        x_read = fir_filter(x_read);
+        convert_read(x_read, & level, & led);
+
+    }
+
+    return 0;
+}

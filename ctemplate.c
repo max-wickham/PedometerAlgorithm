@@ -1,6 +1,20 @@
 
 #include <stdio.h>
+#include "system.h"
+#include "altera_up_avalon_accelerometer_spi.h"
+#include "altera_avalon_timer_regs.h"
+#include "altera_avalon_timer.h"
+#include "altera_avalon_pio_regs.h"
+#include "sys/alt_irq.h"
+#include <sys/alt_stdio.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include "altera_avalon_pio_regs.h"
 
+
+#define TRUE 1
+#define FALSE 0
 //Acceleration
 struct ListAxis{
     long int data[{{axis_size}}];
@@ -21,10 +35,14 @@ void insert(struct ListAxis* list, long int data){
 }
 
 long int filterProduct(struct ListAxis* a, struct ListConstants* alpha){
-    long int total;
+    long int total = 0;
+    int cursor;
+    long int data;
     for(int i = 0; i < a->length; i++){
-        int cursor = (i + a->cursor) % a->cursor;
-        total += ((a->data[cursor])*(alpha->data[i]));
+        cursor = (i + a->cursor) % a->length;
+        data = ((a->data[cursor])*(alpha->data[i]));
+        data >>= {{lpfBitScalar}};
+        total += data;
     }
     return total;
 }
@@ -92,9 +110,13 @@ long int userAccelerationGravitationalDirection(struct Accelerometer* accelerome
 
 long int firAccelerometer(struct Accelerometer* accelerometer){
     long int total = 0;
+    long int data;
+    int cursor;
     for(int i = 0; i < accelerometer->a->length; i++){
-        int cursor = (i + accelerometer->a->cursor) % accelerometer->a->cursor;
-        total += ((accelerometer->a->data[cursor])*(accelerometer->alpha->data[i]));
+        cursor = (i + accelerometer->a->cursor) % accelerometer->a->length;
+        long int data = ((accelerometer->a->data[cursor])*(accelerometer->alpha->data[i]));
+        data >>= {{bpfBitScalar}};
+        total += data;
     }
     return total;
 }
@@ -112,9 +134,9 @@ long int run_filter(struct Accelerometer* accelerometer, long int x, long int y,
 
 int main(){
     //first initialise the three acceleration axis;
-    struct ListAxis x; x.cursor = 0; x.length = {{axis_size}};
-    struct ListAxis y; y.cursor = 0; y.length = {{axis_size}};
-    struct ListAxis z; z.cursor = 0; z.length = {{axis_size}};
+    struct ListAxis x; x.cursor = {{axis_size}}; x.length = {{axis_size}};
+    struct ListAxis y; y.cursor = {{axis_size}}; y.length = {{axis_size}};
+    struct ListAxis z; z.cursor = {{axis_size}}; z.length = {{axis_size}};
     struct ListConstants alphaAxis = {.data = { {% for x in lpf[:-1] %} {{x}} , {% endfor %} {{lpf[axis_size-1]}}}};
     struct Acceleration accelerationX; accelerationX.a = &x; accelerationX.alpha = &alphaAxis; accelerationX.firA = 0;
     struct Acceleration accelerationY; accelerationY.a = &y; accelerationY.alpha = &alphaAxis; accelerationY.firA = 0;
@@ -125,14 +147,61 @@ int main(){
     accelerometer.x = &accelerationX; accelerometer.y = &accelerationY; accelerometer.z = &accelerationZ;
     accelerometer.a = &a;
     accelerometer.alpha = &alphaA;
-
-    long int xData;
-    long int yData;
-    long int zData;
     long int data;
-    //while(1){
-        //update the xData yData and zData values from the accelerometer
-        data = run_filter(&accelerometer,xData,yData,zData);
-    printf("%ld",data);
-    //}
+    long int gravX;
+    long int gravY;
+    long int gravZ;
+    int gravTotal;
+    int correctGrav = FALSE;
+
+    int count = 0;
+    int below = TRUE;
+    long int peakMag = 5500;
+    long int lowMag = 0;
+
+    alt_32 x_read;
+    alt_32 y_read;
+    alt_32 z_read;
+    alt_up_accelerometer_spi_dev * acc_dev;
+    acc_dev = alt_up_accelerometer_spi_open_dev("/dev/accelerometer_spi");
+    if (acc_dev == NULL) { // if return 1, check if the spi ip name is "accelerometer_spi"
+        return 1;
+    }
+
+    int test_count = 0;
+    while (1) {
+
+        alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
+        alt_up_accelerometer_spi_read_y_axis(acc_dev, & y_read);
+        alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
+        //fprintf(fp," %ld ",x_read);
+
+        data = run_filter(&accelerometer,x_read,y_read,z_read);
+        gravX = gravitationalA(accelerometer.x);
+        gravY = gravitationalA(accelerometer.y);
+        gravZ = gravitationalA(accelerometer.z);
+        gravTotal = sqrt((gravX*gravX+gravY*gravY+gravZ*gravZ));
+        correctGrav = (gravTotal < 450) & (gravTotal > 350);
+        //printf("%ld\n",gravTotal);
+        if(correctGrav){
+            if(below){
+                if(data > peakMag){
+                    count += 1;
+                    printf("%ld\n",count);
+                    below = FALSE;
+                }
+            }else{
+                if(data < lowMag){
+                    below = TRUE;
+                }
+            }
+            if((test_count % 100) == 0){
+            }
+            test_count += 1;
+        }
+
+
+    }
+    //printf("%d ",count);
 }
+//56 hz optimum

@@ -1,0 +1,505 @@
+!SESSION 2021-03-13 20:01:29.245 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2021-03-13 20:01:54.778
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-13 20:03:39.650
+!MESSAGE Indexed 'accel_test_bsp' (83 sources, 163 headers) in 2.75 sec: 5,501 declarations; 9,066 references; 19 unresolved inclusions; 2 syntax errors; 58 unresolved names (0.4%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-13 20:03:40.472
+!MESSAGE Indexed 'accel_test' (1 sources, 21 headers) in 0.08 sec: 983 declarations; 1,599 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:05:06.830
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:05:08.347
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:52:55.618
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-13 20:52:56.896
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --stop] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:52:56.951
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-13 20:52:58.239
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --go, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-13 20:52:58.244
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:54:22.620
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 20:54:24.184
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:06:20.521
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:06:20.696
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:06:22.303
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:07:00.462
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:07:05.026
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:07:31.103
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:07:35.600
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:08:00.496
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:08:05.140
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:09:13.780
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-13 21:09:18.342
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/accel_test/accel_test.elf]
+!SESSION 2021-03-14 11:04:20.339 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.core.resources 2 10035 2021-03-14 11:04:27.773
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2021-03-14 11:04:38.365
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-14 11:33:11.116
+!MESSAGE Indexed 'small_pedo_bsp' (83 sources, 152 headers) in 1.86 sec: 4,949 declarations; 8,335 references; 65 unresolved inclusions; 3 syntax errors; 134 unresolved names (1%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-14 11:33:11.638
+!MESSAGE Indexed 'small_pedo' (1 sources, 0 headers) in 0.003 sec: 1 declarations; 1 references; 1 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+!SESSION 2021-03-14 11:44:42.205 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization /home/max/IntelFPGA/18.0/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2021-03-14 11:44:54.975
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:08.761
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:09.881
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:09.955
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:11.068
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:11.070
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:29.358
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:30.492
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:30.556
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:31.676
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:31.676
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:54.590
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:55.710
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:45:55.774
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:56.881
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:45:56.882
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:46:05.679
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:46:06.795
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:46:06.855
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:46:07.979
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:46:07.981
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:48:44.635
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:48:45.750
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 11:48:45.817
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:48:46.929
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 11:48:46.930
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:14:40.994
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --stop --accept-bad-sysid --sidp=Not Found]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:14:42.187
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --stop, --accept-bad-sysid, --sidp=Not Found] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:14:42.249
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=' --instance=-1 --go --accept-bad-sysid /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:14:43.409
+!MESSAGE Failed Executing: [nios2-download, '--cable=', --instance=-1, --go, --accept-bad-sysid, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/small_pedo/small_pedo.elf] return code: 16
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:14:43.411
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help documentation could not be indexed completely.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix04.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix07.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix05.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix06.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/api-index-deprecated.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix08.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix02.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2021-03-14 12:17:34.539
+!MESSAGE Help document /org.eclipse.linuxtools.cdt.libhover.devhelp/totem/ix03.html cannot be opened.
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-14 12:18:21.753
+!MESSAGE Indexed 'SmallPedom_bsp' (83 sources, 160 headers) in 1.86 sec: 5,353 declarations; 8,776 references; 31 unresolved inclusions; 3 syntax errors; 69 unresolved names (0.49%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-03-14 12:18:22.326
+!MESSAGE Indexed 'SmallPedom' (1 sources, 0 headers) in 0.002 sec: 1 declarations; 1 references; 1 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:18:55.166
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:18:56.570
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:19:45.382
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:19:45.500
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:19:46.906
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:30:17.151
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:30:17.269
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:30:18.685
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:34:06.786
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:34:06.946
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:34:08.351
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:36:53.722
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:36:53.842
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:36:55.250
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:38:35.529
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:38:35.657
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:38:37.064
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:39:22.817
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:39:23.041
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:39:24.665
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:42:50.849
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:42:52.258
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:43:58.946
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:43:59.016
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:00.289
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --stop] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:44:00.298
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:01.579
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --go, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:01.580
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:44:20.071
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:21.345
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --stop] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:44:21.352
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:22.633
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --go, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:44:22.634
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:45:10.227
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:45:11.659
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:47:38.251
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:47:39.845
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY org.eclipse.cdt.ui 4 0 2021-03-14 12:50:29.585
+!MESSAGE Error in CDT UI during reconcile
+!STACK 1
+C Model Exception: C Model Status [Element hello_world_small.c does not exist.]
+	at org.eclipse.cdt.internal.core.model.CElement.newNotPresentException(CElement.java:484)
+	at org.eclipse.cdt.internal.core.model.TranslationUnit.makeConsistent(TranslationUnit.java:573)
+	at org.eclipse.cdt.internal.core.model.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:62)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:341)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:607)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:635)
+	at org.eclipse.cdt.internal.core.model.WorkingCopy.reconcile(WorkingCopy.java:362)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:78)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:63)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:87)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:349)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+!SUBENTRY 1 org.eclipse.cdt.core 4 969 2021-03-14 12:50:29.586
+!MESSAGE Element hello_world_small.c does not exist.
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:50:42.289
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:50:42.400
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:50:43.807
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:54:16.847
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:54:16.965
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:54:18.358
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:55:06.758
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:55:06.829
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:55:08.103
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --stop] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:55:08.110
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:55:09.389
+!MESSAGE Failed Executing: [nios2-download, '--cable=USB-Blaster on localhost [3-2]', --device=1, --instance=0, --go, /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf] return code: 8
+
+!ENTRY com.altera.sbtgui.launch 4 0 2021-03-14 12:55:09.391
+!MESSAGE Downloading ELF Process failed
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:56:14.620
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:56:16.044
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:57:22.644
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:57:22.768
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 12:57:24.333
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:09:02.621
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:09:02.857
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:09:04.268
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:11:35.976
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:11:36.081
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:11:37.664
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:13.677
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:43.849
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:46.831
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:55.137
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:55.271
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:12:56.809
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:13:48.800
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:13:48.924
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:13:50.559
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:15:23.155
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [3-2]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:15:23.264
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --stop]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2021-03-14 13:15:24.843
+!MESSAGE Executing: [/bin/bash, -c, nios2-download '--cable=USB-Blaster on localhost [3-2]' --device=1 --instance=0 --go /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom/SmallPedom.elf]

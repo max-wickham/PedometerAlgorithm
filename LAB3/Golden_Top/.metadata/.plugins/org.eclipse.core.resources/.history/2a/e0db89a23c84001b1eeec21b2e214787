@@ -1,0 +1,58 @@
+#include "system.h"
+#include "altera_up_avalon_accelerometer_spi.h"
+#include "altera_avalon_timer_regs.h"
+#include "altera_avalon_timer.h"
+#include "altera_avalon_pio_regs.h"
+#include "sys/alt_irq.h"
+#include <stdlib.h>
+
+#define OFFSET -32
+#define PWM_PERIOD 16
+
+alt_8 pwm = 0;
+alt_u8 led;
+int level;
+
+// Accelerometer filter variables
+#define FILTER_ORDER 49
+float filter_coefficients[FILTER_ORDER] = { 0.00464135470656760, 0.00737747226463043, -0.00240768675012549, -0.00711018685736960, 0.00326564674118811, 6.11463173516297e-05, -0.00935761974859676, 0.00397493281996669, 0.00437887161977042, -0.0133160721439149, 0.00304771783859210, 0.0114361953193935, -0.0179286984033957, -0.00107408161324030, 0.0222597890359562, -0.0224772654507762, -0.0108744542661829, 0.0395972756447093, -0.0263221720611839, -0.0337570326573828, 0.0751987217099385, -0.0288978194901786, -0.120354853218164, 0.287921968939103, 0.636863388360281, 0.287921968939103, -0.120354853218164, -0.0288978194901786, 0.0751987217099385, -0.0337570326573828, -0.0263221720611839, 0.0395972756447093, -0.0108744542661829, -0.0224772654507762, 0.0222597890359562, -0.00107408161324030, -0.0179286984033957, 0.0114361953193935, 0.00304771783859210, -0.0133160721439149, 0.00437887161977042, 0.00397493281996669, -0.00935761974859676, 6.11463173516297e-05, 0.00326564674118811, -0.00711018685736960, -0.00240768675012549, 0.00737747226463043, 0.00464135470656760 };
+alt_32 previous_readings[FILTER_ORDER];
+
+
+
+void timer_init(void * isr) {
+
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_BASE, 0x0003);
+    IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
+    IOWR_ALTERA_AVALON_TIMER_PERIODL(TIMER_BASE, 0x0900);
+    IOWR_ALTERA_AVALON_TIMER_PERIODH(TIMER_BASE, 0x0000);
+    alt_irq_register(TIMER_IRQ, 0, isr);
+    IOWR_ALTERA_AVALON_TIMER_CONTROL(TIMER_BASE, 0x0007);
+
+}
+
+int main() {
+
+    alt_32 x_read;
+    alt_32 y_read;
+    alt_32 z_read;
+    alt_up_accelerometer_spi_dev * acc_dev;
+    acc_dev = alt_up_accelerometer_spi_open_dev("/dev/accelerometer_spi");
+    if (acc_dev == NULL) { // if return 1, check if the spi ip name is "accelerometer_spi"
+        return 1;
+    }
+
+    timer_init(sys_timer_isr);
+    while (1) {
+
+        alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
+        alt_up_accelerometer_spi_read_y_axis(acc_dev, & y_read);
+        alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
+        // alt_printf("raw data: %x\n", x_read);
+        x_read = fir_filter(x_read);
+        convert_read(x_read, & level, & led);
+
+    }
+
+    return 0;
+}

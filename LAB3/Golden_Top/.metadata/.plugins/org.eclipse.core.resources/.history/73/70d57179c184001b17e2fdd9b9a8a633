@@ -1,0 +1,194 @@
+
+#include <stdio.h>
+#include "system.h"
+#include "altera_up_avalon_accelerometer_spi.h"
+#include "altera_avalon_timer_regs.h"
+#include "altera_avalon_timer.h"
+#include "altera_avalon_pio_regs.h"
+#include "sys/alt_irq.h"
+#include <sys/alt_stdio.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include "altera_avalon_pio_regs.h"
+
+
+#define TRUE 1
+#define FALSE 0
+//Acceleration
+struct ListAxis{
+    long int data[122];
+    int cursor;
+    int length;
+};
+
+struct ListConstants{
+    long int data[122];
+};
+
+void insert(struct ListAxis* list, long int data){
+    list->cursor--;
+    if(list->cursor < 0){
+        list->cursor += list->length;
+    }
+    list->data[list->cursor] = data;
+}
+
+long int filterProduct(struct ListAxis* a, struct ListConstants* alpha){
+    long int total = 0;
+    int cursor;
+    long int data;
+    for(int i = 0; i < a->length; i++){
+        cursor = (i + a->cursor) % a->length;
+        data = ((a->data[cursor])*(alpha->data[i]));
+        data >>= 19;
+        total += data;
+    }
+    return total;
+}
+
+struct Acceleration{
+    struct ListAxis* a;
+    struct ListConstants* alpha;
+    long int firA;
+};
+
+void fir(struct Acceleration* acceleration){
+    acceleration->firA = filterProduct(acceleration->a,acceleration->alpha);
+}
+
+long int userA(struct Acceleration* acceleration){
+    return (acceleration->a->data[acceleration->a->cursor] - acceleration->firA);
+}
+
+long int gravitationalA(struct Acceleration* acceleration){
+    return (acceleration->firA);
+}
+
+//Accelerometer
+struct ListAccelerometer{
+    long int data[136];
+    int cursor;
+    int length;
+};
+
+struct ListConstantsAccelerometer{
+    long int data[136];
+};
+
+struct Accelerometer{
+    struct Acceleration* x;
+    struct Acceleration* y;
+    struct Acceleration* z;
+    struct ListAccelerometer* a;
+    struct ListConstantsAccelerometer* alpha;
+};
+
+void insertA(struct ListAccelerometer* list, long int data){
+    list->cursor--;
+    if(list->cursor < 0){
+        list->cursor += list->length;
+    }
+    list->data[list->cursor] = data;
+}
+
+void insertAccelerometer(struct Accelerometer* accelerometer, long int x, long int y, long int z){
+    insert(accelerometer->x->a,x);
+    insert(accelerometer->y->a,y);
+    insert(accelerometer->z->a,z);
+}
+
+long int userAccelerationGravitationalDirection(struct Accelerometer* accelerometer){
+    fir(accelerometer->x);
+    fir(accelerometer->y);
+    fir(accelerometer->z);
+    long int x_sum = userA(accelerometer->x) * gravitationalA(accelerometer->x);
+    long int y_sum = userA(accelerometer->y) * gravitationalA(accelerometer->y);
+    long int z_sum = userA(accelerometer->z) * gravitationalA(accelerometer->z);
+    return (x_sum + y_sum + z_sum);
+}
+
+long int firAccelerometer(struct Accelerometer* accelerometer){
+    long int total = 0;
+    long int data;
+    int cursor;
+    for(int i = 0; i < accelerometer->a->length; i++){
+        cursor = (i + accelerometer->a->cursor) % accelerometer->a->length;
+        long int data = ((accelerometer->a->data[cursor])*(accelerometer->alpha->data[i]));
+        data >>= 17;
+        total += data;
+    }
+    return total;
+}
+
+long int filter(struct Accelerometer* accelerometer){
+    insertA(accelerometer->a,userAccelerationGravitationalDirection(accelerometer));
+    return firAccelerometer(accelerometer);
+}
+
+//StepDetection
+long int run_filter(struct Accelerometer* accelerometer, long int x, long int y, long int z){
+    insertAccelerometer(accelerometer,x,y,z);
+    return filter(accelerometer);
+}
+
+int main(){
+    //first initialise the three acceleration axis;
+    struct ListAxis x; x.cursor = 122; x.length = 122;
+    struct ListAxis y; y.cursor = 122; y.length = 122;
+    struct ListAxis z; z.cursor = 122; z.length = 122;
+    struct ListConstants alphaAxis = {.data = {  365 ,  174 ,  215 ,  261 ,  313 ,  371 ,  436 ,  507 ,  586 ,  672 ,  765 ,  868 ,  977 ,  1096 ,  1223 ,  1359 ,  1503 ,  1656 ,  1819 ,  1989 ,  2169 ,  2357 ,  2554 ,  2758 ,  2970 ,  3189 ,  3416 ,  3649 ,  3888 ,  4132 ,  4381 ,  4634 ,  4890 ,  5149 ,  5410 ,  5672 ,  5934 ,  6195 ,  6455 ,  6712 ,  6966 ,  7216 ,  7460 ,  7697 ,  7928 ,  8151 ,  8364 ,  8568 ,  8761 ,  8942 ,  9111 ,  9268 ,  9410 ,  9539 ,  9652 ,  9750 ,  9833 ,  9900 ,  9950 ,  9983 ,  10000 ,  10000 ,  9983 ,  9950 ,  9900 ,  9833 ,  9750 ,  9652 ,  9539 ,  9410 ,  9268 ,  9111 ,  8942 ,  8761 ,  8568 ,  8364 ,  8151 ,  7928 ,  7697 ,  7460 ,  7216 ,  6966 ,  6712 ,  6455 ,  6195 ,  5934 ,  5672 ,  5410 ,  5149 ,  4890 ,  4634 ,  4381 ,  4132 ,  3888 ,  3649 ,  3416 ,  3189 ,  2970 ,  2758 ,  2554 ,  2357 ,  2169 ,  1989 ,  1819 ,  1656 ,  1503 ,  1359 ,  1223 ,  1096 ,  977 ,  868 ,  765 ,  672 ,  586 ,  507 ,  436 ,  371 ,  313 ,  261 ,  215 ,  174 ,  365}};
+    struct Acceleration accelerationX; accelerationX.a = &x; accelerationX.alpha = &alphaAxis; accelerationX.firA = 0;
+    struct Acceleration accelerationY; accelerationY.a = &y; accelerationY.alpha = &alphaAxis; accelerationY.firA = 0;
+    struct Acceleration accelerationZ; accelerationZ.a = &z; accelerationZ.alpha = &alphaAxis; accelerationZ.firA = 0;
+    struct ListAccelerometer a; a.cursor = 0; a.length = 136;
+    struct ListConstantsAccelerometer alphaA = {.data = {  -88 ,  -72 ,  -74 ,  -51 ,  -1 ,  71 ,  153 ,  223 ,  260 ,  248 ,  182 ,  70 ,  -64 ,  -192 ,  -280 ,  -310 ,  -276 ,  -194 ,  -98 ,  -24 ,  -3 ,  -46 ,  -137 ,  -235 ,  -283 ,  -228 ,  -39 ,  273 ,  655 ,  1014 ,  1245 ,  1255 ,  995 ,  485 ,  -190 ,  -889 ,  -1455 ,  -1751 ,  -1708 ,  -1343 ,  -761 ,  -129 ,  373 ,  611 ,  537 ,  217 ,  -185 ,  -451 ,  -378 ,  147 ,  1096 ,  2278 ,  3372 ,  4002 ,  3840 ,  2709 ,  660 ,  -2006 ,  -4782 ,  -7056 ,  -8252 ,  -7975 ,  -6127 ,  -2949 ,  1007 ,  4990 ,  8207 ,  10000 ,  10000 ,  8207 ,  4990 ,  1007 ,  -2949 ,  -6127 ,  -7975 ,  -8252 ,  -7056 ,  -4782 ,  -2006 ,  660 ,  2709 ,  3840 ,  4002 ,  3372 ,  2278 ,  1096 ,  147 ,  -378 ,  -451 ,  -185 ,  217 ,  537 ,  611 ,  373 ,  -129 ,  -761 ,  -1343 ,  -1708 ,  -1751 ,  -1455 ,  -889 ,  -190 ,  485 ,  995 ,  1255 ,  1245 ,  1014 ,  655 ,  273 ,  -39 ,  -228 ,  -283 ,  -235 ,  -137 ,  -46 ,  -3 ,  -24 ,  -98 ,  -194 ,  -276 ,  -310 ,  -280 ,  -192 ,  -64 ,  70 ,  182 ,  248 ,  260 ,  223 ,  153 ,  71 ,  -1 ,  -51 ,  -74 ,  -72 ,  -88}};
+    struct Accelerometer accelerometer;
+    accelerometer.x = &accelerationX; accelerometer.y = &accelerationY; accelerometer.z = &accelerationZ;
+    accelerometer.a = &a;
+    accelerometer.alpha = &alphaA;
+    long int data;
+
+    int count = 0;
+    int below = TRUE;
+    long int peakMag = 10000000;
+    long int lowMag = 0;
+
+    alt_32 x_read;
+    alt_32 y_read;
+    alt_32 z_read;
+    alt_up_accelerometer_spi_dev * acc_dev;
+    acc_dev = alt_up_accelerometer_spi_open_dev("/dev/accelerometer_spi");
+    if (acc_dev == NULL) { // if return 1, check if the spi ip name is "accelerometer_spi"
+        return 1;
+    }
+
+    int test_count = 0;
+    while (1) {
+
+        alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
+        alt_up_accelerometer_spi_read_y_axis(acc_dev, & y_read);
+        alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
+        //fprintf(fp," %ld ",x_read);
+
+        data = run_filter(&accelerometer,x_read,y_read,z_read);
+        if(below){
+            if(data > peakMag){
+                count += 1;
+                below = FALSE;
+            }
+        }else{
+            if(data < lowMag){
+                below = TRUE;
+            }
+        }
+        if((test_count % 100) == 0){
+            printf("%ld ",data);
+        }
+        test_count += 1;
+
+
+
+    }
+    //printf("%d ",count);
+}

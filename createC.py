@@ -1,7 +1,8 @@
 import re
 from jinja2 import Template
+import math
 
-max_int = 2000
+max_int = 10000
 
 
 lpf = open('./lowPass.txt','r')
@@ -20,7 +21,8 @@ def convertToInt(data):
     multiplier = max_int / max_float
     for i in range(len(data)):
         data[i] = int(data[i]*multiplier+0.5)
-
+lpfBitScalar = int(math.log(max_int/max(lpfData),2)+0.5)
+bpfBitScalar = int(math.log(max_int/max(bpfData),2)+0.5)
 convertToInt(lpfData)
 convertToInt(bpfData)
 
@@ -28,7 +30,8 @@ convertToInt(bpfData)
 output = open("./output.c","w")
 inputFile = open("ctemplate.c","r")
 tm = Template(inputFile.read())
-output.write(tm.render(lpf=lpfData, bpf=bpfData, axis_size = len(lpfData), acceleration_size = len(bpfData)))
+output.write(tm.render(lpfBitScalar = lpfBitScalar, bpfBitScalar = bpfBitScalar, 
+    lpf=lpfData, bpf=bpfData, axis_size = len(lpfData), acceleration_size = len(bpfData)))
 output.close()
 inputFile.close()
 lpf.close()

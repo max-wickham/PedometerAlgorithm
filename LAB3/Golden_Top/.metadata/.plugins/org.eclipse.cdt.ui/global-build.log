@@ -1,0 +1,48 @@
+13:13:42 **** Incremental Build of configuration Nios II for project SmallPedom ****
+make all 
+Info: Building ../SmallPedom_bsp/
+make --no-print-directory -C ../SmallPedom_bsp/
+[BSP build complete]
+Info: Compiling hello_world_small.c to obj/default/hello_world_small.o
+nios2-elf-gcc -xc -MP -MMD -c -I../SmallPedom_bsp//HAL/inc -I../SmallPedom_bsp/ -I../SmallPedom_bsp//drivers/inc -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall  -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/hello_world_small.o hello_world_small.c
+hello_world_small.c: In function 'firAccelerometer':
+hello_world_small.c:113:14: warning: unused variable 'data' [-Wunused-variable]
+     long int data;
+              ^
+hello_world_small.c: In function 'main':
+hello_world_small.c:190:28: warning: format '%ld' expects argument of type 'long int', but argument 2 has type 'int' [-Wformat=]
+                     printf("%ld\n",count);
+                            ^
+hello_world_small.c:190:28: warning: format '%ld' expects argument of type 'long int', but argument 2 has type 'int' [-Wformat=]
+Info: Linking SmallPedom.elf
+nios2-elf-g++ -T'../SmallPedom_bsp//linker.x' -msys-crt0='../SmallPedom_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../SmallPedom_bsp/ -msmallc  -Wl,-Map=SmallPedom.map   -Os -g -Wall  -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o SmallPedom.elf obj/default/hello_world_small.o -lm -msys-lib=m
+nios2-elf-insert SmallPedom.elf --thread_model hal --cpu_name cpu --qsys true --simulation_enabled false --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios_accelerometer --quartus_project_dir "/home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top" --jdi /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom_bsp/../../DE10_LITE_Golden_Top.jdi --sopcinfo /home/max/Sync/Imperial/InformationProcessing/LAB3/Golden_Top/software/SmallPedom_bsp/../../nios_accelerometer.sopcinfo
+Info: (SmallPedom.elf) 17 KBytes program size (code + initialized data).
+Info:                  45 KBytes free for stack + heap.
+Info: Creating SmallPedom.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source SmallPedom.elf >SmallPedom.objdump
+[SmallPedom build complete]
+13:13:47 **** Build of configuration Nios II for project SmallPedom ****
+make all 
+Info: Building ../SmallPedom_bsp/
+make --no-print-directory -C ../SmallPedom_bsp/
+[BSP build complete]
+[SmallPedom build complete]
+13:13:48 **** Incremental Build of configuration Nios II for project SmallPedom ****
+make all 
+Info: Building ../SmallPedom_bsp/
+make --no-print-directory -C ../SmallPedom_bsp/
+[BSP build complete]
+[SmallPedom build complete]
+13:15:21 **** Build of configuration Nios II for project SmallPedom ****
+make all 
+Info: Building ../SmallPedom_bsp/
+make --no-print-directory -C ../SmallPedom_bsp/
+[BSP build complete]
+[SmallPedom build complete]
+13:15:22 **** Incremental Build of configuration Nios II for project SmallPedom ****
+make all 
+Info: Building ../SmallPedom_bsp/
+make --no-print-directory -C ../SmallPedom_bsp/
+[BSP build complete]
+[SmallPedom build complete]

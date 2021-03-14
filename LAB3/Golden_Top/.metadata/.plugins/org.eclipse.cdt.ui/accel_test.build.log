@@ -1,0 +1,18 @@
+11:48:55 **** Incremental Build of configuration Nios II for project accel_test ****
+make all 
+Info: Building ../accel_test_bsp/
+make --no-print-directory -C ../accel_test_bsp/
+[BSP build complete]
+Info: Linking accel_test.elf
+nios2-elf-g++ -T'../accel_test_bsp//linker.x' -msys-crt0='../accel_test_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../accel_test_bsp/   -Wl,-Map=accel_test.map   -O0 -g -Wall  -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o accel_test.elf obj/default/hello_world.o -lm -msys-lib=m
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: accel_test.elf section `.text' will not fit in region `onchip_memory'
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: address 0x22b28 of accel_test.elf section `.rwdata' is not within region `onchip_memory'
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: address 0x247a0 of accel_test.elf section `.bss' is not within region `onchip_memory'
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: address 0x22b28 of accel_test.elf section `.rwdata' is not within region `onchip_memory'
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: address 0x247a0 of accel_test.elf section `.bss' is not within region `onchip_memory'
+/home/max/IntelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-pc-linux-gnu/nios2-elf/bin/ld: region `onchip_memory' overflowed by 18336 bytes
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:1065: accel_test.elf] Error 1
+
+11:48:55 Build Finished (took 263ms)
+
